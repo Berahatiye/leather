@@ -135,7 +135,7 @@
 
     .overlay {
       position: absolute;
-      inset: 0;
+      inset: unset;
     }
 
     .section-content {
@@ -199,6 +199,8 @@
       align-items: center;
       padding: 12px 0;
       margin-top: 12px;
+      gap: 12px;
+      border-top: #f5f5f7 2px solid;
     }
 
     .section3 {
@@ -214,7 +216,7 @@
       border: none;
       border-radius: .375em;
       position: absolute;
-      bottom: 50px;
+      bottom: 100px;
       left: 50%;
       transform: translateX(-50%);
       padding: 12px 24px;
@@ -304,13 +306,80 @@
       }
     }
 
-    .berat {
-      color: #666666;
-      font-style: normal;
-      font-weight: 600;
-      font-size: 12px;
-      text-align: center;
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+  #popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(6px);
+    padding: 20px;
+  }
+  #popup.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  .popup-content {
+    background: white;
+    padding: 32px 28px;
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    font-size: 1rem;
+    color: #333;
+    user-select: text;
+    position: relative;
+    line-height: 1.5;
+  }
+  .popup-close {
+    position: sticky;
+    top: 0;
+    float: right;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.2s ease;
+    line-height: 1;
+    padding: 0 0 12px 12px;
+    margin-bottom: 12px;
+  }
+  .popup-close:hover {
+    color: #555;
+  }
+  /* Scrollbar styling for popup content */
+  .popup-content::-webkit-scrollbar {
+    width: 10px;
+  }
+  .popup-content::-webkit-scrollbar-thumb {
+    background-color: rgba(184, 115, 51, 0.5);
+    border-radius: 8px;
+  }
+  .popup-content::-webkit-scrollbar-track {
+    background: #f0f0f0;
+  }
   </style>
 </head>
 <body>
@@ -326,7 +395,7 @@
       </div>
       <nav>
         <span onclick="scrollToSection('iletisimm')" id="secenek" class="secenek">İletişim</span>
-        <span onclick="scrollToSection('section2')" id="secenek2" class="secenek2">Hakkımızda</span>
+        <span class="secenek2" id="secenek2" href="javascript:void(0)">Hakkında</span>
       </nav>
     </header>
 
@@ -348,6 +417,7 @@
         </div>
 
         <div class="iletisimm" id="iletisimm">
+          <a href="https://www.instagram.com/ethernaleather/">
           <svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" viewBox="0,0,256,256">
             <g fill="#f5f5f7">
               <g transform="scale(8,8)">
@@ -355,20 +425,41 @@
               </g>
             </g>
           </svg>
-
+          </a>
+          <a href="https://maps.app.goo.gl/EFmcEgXbc9mHzLwp8">
           <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="57" height="57" viewBox="0,0,256,256"><g fill="#f5f5f7" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.33333,5.33333)"><path d="M35.76,26.36h0.01c0,0 -3.77,5.53 -6.94,9.64c-2.74,3.55 -3.54,6.59 -3.77,8.06c-0.09,0.54 -0.53,0.94 -1.06,0.94c-0.53,0 -0.97,-0.4 -1.06,-0.94c-0.23,-1.47 -1.03,-4.51 -3.77,-8.06c-0.42,-0.55 -0.85,-1.12 -1.28,-1.7l10.35,-12.3l8.33,-9.88c0.92,1.93 1.43,4.09 1.43,6.38c0,2.9 -0.83,5.59 -2.24,7.86z"></path><path d="M28.24,22l-10.35,12.3c-2.82,-3.78 -5.66,-7.94 -5.66,-7.94h0.01c-0.3,-0.48 -0.57,-0.97 -0.8,-1.48l8.32,-9.88c-0.79,0.95 -1.26,2.17 -1.26,3.5c0,3.04 2.46,5.5 5.5,5.5c1.71,0 3.24,-0.78 4.24,-2z"></path><path d="M28.4,4.74l-8.57,10.18l-6.56,-5.72c2.56,-3.18 6.42,-5.2 10.73,-5.2c1.54,0 3.02,0.26 4.4,0.74z"></path><path d="M19.83,14.92l-0.07,0.08l-8.32,9.88c-0.92,-1.93 -1.44,-4.09 -1.44,-6.38c0,-3.54 1.23,-6.79 3.27,-9.3z"></path><path d="M28.24,22c0.79,-0.95 1.26,-2.17 1.26,-3.5c0,-3.04 -2.46,-5.5 -5.5,-5.5c-1.71,0 -3.24,0.78 -4.24,2l8.64,-10.26c3.59,1.22 6.53,3.91 8.17,7.38z"></path></g></g></svg>
-
+          </a>
+          <a href="https://api.whatsapp.com/send/?phone=905443807080">
           <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="62" height="62" viewBox="0,0,256,256"><g fill="#f5f5f7" fill-rule="evenodd" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(8,8)"><path d="M24.50391,7.50391c-2.25781,-2.25781 -5.25781,-3.50391 -8.45312,-3.50391c-6.58594,0 -11.94922,5.35938 -11.94922,11.94531c-0.00391,2.10547 0.54688,4.16016 1.59375,5.97266l-1.69531,6.19141l6.33594,-1.66406c1.74219,0.95313 3.71094,1.45313 5.71094,1.45703h0.00391c6.58594,0 11.94531,-5.35937 11.94922,-11.94922c0,-3.19141 -1.24219,-6.19141 -3.49609,-8.44922zM16.05078,25.88281h-0.00391c-1.78125,0 -3.53125,-0.48047 -5.05469,-1.38281l-0.36328,-0.21484l-3.76172,0.98438l1.00391,-3.66406l-0.23437,-0.375c-0.99609,-1.58203 -1.51953,-3.41016 -1.51953,-5.28516c0,-5.47266 4.45703,-9.92578 9.9375,-9.92578c2.65234,0 5.14453,1.03516 7.01953,2.91016c1.875,1.87891 2.90625,4.37109 2.90625,7.02344c0,5.47656 -4.45703,9.92969 -9.92969,9.92969zM21.49609,18.44531c-0.29687,-0.14844 -1.76562,-0.87109 -2.03906,-0.96875c-0.27344,-0.10156 -0.47266,-0.14844 -0.67187,0.14844c-0.19922,0.30078 -0.76953,0.97266 -0.94531,1.17188c-0.17187,0.19531 -0.34766,0.22266 -0.64453,0.07422c-0.30078,-0.14844 -1.26172,-0.46484 -2.40234,-1.48437c-0.88672,-0.78906 -1.48828,-1.76953 -1.66016,-2.06641c-0.17578,-0.30078 -0.01953,-0.46094 0.12891,-0.60937c0.13672,-0.13281 0.30078,-0.34766 0.44922,-0.52344c0.14844,-0.17187 0.19922,-0.29687 0.30078,-0.49609c0.09766,-0.19922 0.04688,-0.375 -0.02734,-0.52344c-0.07422,-0.14844 -0.67187,-1.62109 -0.92187,-2.21875c-0.24219,-0.58203 -0.48828,-0.5 -0.67187,-0.51172c-0.17187,-0.00781 -0.37109,-0.00781 -0.57031,-0.00781c-0.19922,0 -0.52344,0.07422 -0.79687,0.375c-0.27344,0.29688 -1.04297,1.01953 -1.04297,2.48828c0,1.46875 1.07031,2.89063 1.21875,3.08984c0.14844,0.19531 2.10547,3.21094 5.10156,4.50391c0.71094,0.30859 1.26563,0.49219 1.69922,0.62891c0.71484,0.22656 1.36719,0.19531 1.88281,0.12109c0.57422,-0.08594 1.76563,-0.72266 2.01563,-1.42187c0.24609,-0.69531 0.24609,-1.29297 0.17188,-1.41797c-0.07422,-0.125 -0.27344,-0.19922 -0.57422,-0.35156z"></path></g></g></svg>
+          </a>
         </div>
       </section>
 
       <section class="section section3" id="section3">
-        <div class="overlay"></div>
-        <div class="berat">Designed by Berat Can Tursun © 2025<br>Tüm hakları saklıdır.</div>
+        <p><a style="text-decoration: none !important; color: #666666; font-style: normal; font-weight: 600; font-size: 12px; text-align: center;" href="https://berahatiye.github.io/tursun">Site by Berahatiye © 2025 <br>Tüm hakları saklıdır.</a></p>
       </section>
     </div>
   </div>
 
+
+
+
+<div id="popup" aria-modal="true" role="dialog" aria-labelledby="popupTitle" aria-describedby="popupDesc">
+  <div class="popup-content">
+    <button class="popup-close" aria-label="Close popup" onclick="closePopup()">×</button>
+    <p id="popupDesc">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dignissim vestibulum dui, quis efficitur velit bibendum vel. Donec pellentesque nisl at turpis dictum blandit. Integer aliquam enim id lacus malesuada, vitae mollis dolor egestas. Etiam id ligula diam. Ut mollis orci a pharetra ornare. Donec magna nisi, sodales eu mi id, pretium varius mi. Vivamus vel dapibus enim. Proin venenatis, leo at lobortis pellentesque, nulla ante tempus enim, a pretium dolor quam non dolor. Fusce dignissim bibendum odio, consectetur tristique odio blandit in. Fusce convallis tempor velit, a tincidunt quam sagittis non. Integer sodales ultrices risus, eu convallis sapien euismod ut. Nunc aliquet elementum nulla sit amet tempor. Ut lacinia aliquam sem, vel facilisis magna tempor id. Quisque et mi quis dolor sodales pretium nec quis ligula. Duis lobortis odio eget nisl cursus lacinia. Suspendisse id eros efficitur, dignissim velit at, euismod ante.
+
+      Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur ipsum nisi, porttitor quis dolor pellentesque, lobortis rhoncus nisi. Phasellus et volutpat tellus, vel interdum massa. Maecenas id tincidunt tortor. Phasellus cursus justo odio, eu suscipit risus posuere eget. Suspendisse ac vehicula tortor, ut laoreet metus. Nulla sit amet lectus vestibulum, dignissim quam quis, venenatis ex. In feugiat ligula ex, id elementum leo commodo vel. In augue elit, lobortis non dolor id, facilisis varius erat. Sed metus urna, scelerisque a orci consectetur, dignissim ultrices dui. Quisque justo orci, vehicula in blandit vel, elementum cursus dui. Donec facilisis ut nibh in dapibus. Sed ut maximus turpis. Aliquam erat volutpat. Cras nec tellus turpis.
+
+      Maecenas sit amet pellentesque odio. Quisque quis purus eget eros lobortis pellentesque. Ut vel eros ut elit sodales fringilla. Quisque mattis ac nulla non dictum. Morbi a magna pellentesque, semper tellus ac, mattis purus. Ut odio neque, scelerisque sed velit in, gravida porta nisl. Aliquam neque lorem, vestibulum eget nunc eget, auctor pulvinar diam. Curabitur fringilla urna eget ex aliquam, in mattis dui molestie. Aliquam nisi tellus, vehicula vitae accumsan ac, hendrerit ut lorem. Nulla at erat at nisl sollicitudin cursus eget eget nunc. Quisque ligula lacus, faucibus id gravida sed, semper ut erat. Donec lacinia consequat urna non egestas. In nisl lacus, feugiat eget tellus eget, volutpat facilisis risus. Cras sodales mauris lacus, sit amet sodales mauris consectetur eu.
+
+      Cras consectetur, neque in maximus vestibulum, ex metus efficitur massa, ac sollicitudin leo massa a arcu. Suspendisse mollis tortor nulla, nec pulvinar sapien eleifend convallis. Vivamus imperdiet porttitor felis, et varius nunc convallis sed. Sed faucibus viverra lobortis. Integer interdum sagittis nisi vitae dapibus. Sed semper, felis quis blandit elementum, justo erat pharetra lorem, id luctus nibh metus ac nulla. Curabitur suscipit neque et suscipit sollicitudin. Duis dui metus, semper ut interdum vitae, eleifend quis lectus. Praesent porttitor cursus mi eu egestas.
+
+      Duis interdum malesuada sollicitudin. Maecenas dapibus vestibulum aliquet. Ut mollis sed est sit amet aliquam. Nullam ornare rhoncus libero quis tristique. Sed eu libero sit amet mi iaculis pretium sit amet nec nisi. Proin convallis non nulla eu semper. Proin vitae nisi ultrices, auctor urna vitae, sagittis neque. Suspendisse malesuada ornare sodales. Proin efficitur elit sem, pulvinar sodales est fermentum et. Aenean ultrices vulputate euismod. Donec sagittis magna id scelerisque placerat. Aliquam dignissim luctus enim, id ornare massa scelerisque a.
+    </p>
+  </div>
+</div>
   <script>
     const header = document.getElementById('header');
     const scrollArea = document.getElementById('scrollArea');
@@ -381,20 +472,18 @@
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        const isScrolledPastSection1 = entry.isIntersecting;
+        const isScrolled = entry.isIntersecting;
 
-        header.classList.toggle('scrolled', isScrolledPastSection1);
-        secenekk.classList.toggle('scrolled', isScrolledPastSection1);
-        secenekk2.classList.toggle('scrolled', isScrolledPastSection1);
+        header.classList.toggle('scrolled', entry.isIntersecting);
+        secenekk.classList.toggle('scrolled', entry.isIntersecting);
+        secenekk2.classList.toggle('scrolled', entry.isIntersecting);
 
-        scrollImage.src = isScrolledPastSection1
+        imageWrapper.classList.toggle('scrolled-image', isScrolled);
+        scrollImage.src = isScrolled
           ? 'https://raw.githubusercontent.com/Berahatiye/leather/refs/heads/main/ethernalogo-removebg-preview.webp'
           : 'https://raw.githubusercontent.com/Berahatiye/leather/refs/heads/main/ethernalogo.webp';
       });
-    }, {
-      root: scrollArea,
-      threshold: 0.1
-    });
+    }, { root: scrollArea, threshold: 0.5 });
 
     observer.observe(iframescroll);
 
@@ -412,6 +501,30 @@
       setTimeout(() => loader.remove(), 700);
       scrollArea.scrollTop = 0;
     };
+
+
+
+
+
+
+
+    
+  const secenek2Btn = document.getElementById('secenek2')
+  const popup = document.getElementById('popup')
+
+  secenek2Btn.addEventListener('click', () => {
+    popup.classList.add('show')
+  })
+
+  function closePopup() {
+    popup.classList.remove('show')
+  }
+
+  popup.addEventListener('click', e => {
+    if (e.target === popup) {
+      closePopup()
+    }
+  })
   </script>
 </body>
 </html>
