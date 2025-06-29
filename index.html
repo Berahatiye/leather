@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -261,6 +262,7 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       z-index: 2;
       margin-top: 16px;
+      letter-spacing: 3px;
     }
 
     .scroll-button::before,
@@ -324,7 +326,7 @@
 
       .scroll-button {
         padding: 10px 20px;
-        font-size: 0.95rem;
+        font-size: 1.2rem;
       }
     }
 
@@ -394,6 +396,75 @@
   .popup-content::-webkit-scrollbar-track {
     background: #f0f0f0;
   }
+
+
+
+
+
+
+
+
+   #popupsiparis {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(6px);
+    padding: 20px;
+  }
+  #popupsiparis.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  .popupsiparis-content {
+    background: white;
+    padding: 32px 28px;
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    font-size: 1rem;
+    color: #333;
+    user-select: text;
+    position: relative;
+    line-height: 1.5;
+  }
+  .popupsiparis-close {
+    position: sticky;
+    top: 0;
+    float: right;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.2s ease;
+    line-height: 1;
+    padding: 0 0 12px 12px;
+    margin-bottom: 12px;
+  }
+  .popupsiparis-close:hover {
+    color: #555;
+  }
+  
+  .popupsiparis-content::-webkit-scrollbar {
+    width: 10px;
+  }
+  .popupsiparis-content::-webkit-scrollbar-thumb {
+    background-color: rgba(184, 115, 51, 0.5);
+    border-radius: 8px;
+  }
+  .popupsiparis-content::-webkit-scrollbar-track {
+    background: #f0f0f0;
+  }
   </style>
 </head>
 <body>
@@ -410,7 +481,7 @@
       <nav>
         <span onclick="scrollToSection('iletisimm')" id="secenek" class="secenek">İletişim</span>
         <span class="secenek2" id="secenek2" href="javascript:void(0)">Hakkında</span>
-        <span class="secenek3" id="secenek3">Sipariş Oluştur</span>
+        <span class="secenek3" id="secenek3" href="javascript:void(0)">Sipariş Oluştur</span>
       </nav>
     </header>
 
@@ -468,7 +539,21 @@
   <div class="popup-content">
     <button class="popup-close" aria-label="Close popup" onclick="closePopup()">×</button>
     <p id="popupDesc"> 
-      Hakiki Deri & El İşçiliği ile; kulanışlı, şık, klasik ürünler sunuyoruz. Kendi istekleriniz doğrultusunda "Sipariş Oluştur" kısmından ürün talebinde bulunabilirsiniz. Fiyat ve diğer adımlar üzerine tarafınıza geri dönüt sağlanacaktır. 
+      Gerçek deriden el yapımı ürünler imal ediyoruz: Çantalar, cüzdanlar, kartlıklar, aksesuarlar... Atölyemizde ve bu sitede; hazır ürünlerimizden dilediğinizi seçebilir ya da kendi özel tasarımlarınızı oluşturabilirsiniz. Üretim süreçlerimizi izlemek yahut küçük bir çay molası vermek isterseniz de bekleriz...
+    </p>
+  </div>
+</div>
+
+
+
+
+
+
+<div id="popupsiparis" aria-modal="true" role="dialog" aria-labelledby="popupsiparisTitle" aria-describedby="popupsiparisDesc">
+  <div class="popup-content">
+    <button class="popupsiparis-close" aria-label="Close popupsiparis" onclick="closePopupsiparis()">×</button>
+    <p id="popupsiparisDesc"> 
+      AFHUADIFBADSFBAISDOFBDHFBS. 
     </p>
   </div>
 </div>
@@ -519,9 +604,6 @@
 
 
 
-
-
-
     
   const secenek2Btn = document.getElementById('secenek2')
   const popup = document.getElementById('popup')
@@ -537,6 +619,26 @@
   popup.addEventListener('click', e => {
     if (e.target === popup) {
       closePopup()
+    }
+  })
+
+
+
+
+  const secenek3Btn = document.getElementById('secenek3')
+  const popupsiparis = document.getElementById('popupsiparis')
+
+  secenek3Btn.addEventListener('click', () => {
+    popupsiparis.classList.add('show')
+  })
+
+  function closePopupsiparis() {
+    popupsiparis.classList.remove('show')
+  }
+
+  popupsiparis.addEventListener('click', e => {
+    if (e.target === popupsiparis) {
+      closePopupsiparis()
     }
   })
   </script>
