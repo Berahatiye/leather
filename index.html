@@ -478,7 +478,6 @@
       font-weight: 700;
       color: #7e5e34;
       text-align: center;
-      text-transform: uppercase;
       letter-spacing: 0.08em;
       margin-bottom: 2.25rem;
       font-size: 1.2rem;
@@ -722,17 +721,17 @@
   <div class="popup-content">
     <button class="popupsiparis-close" aria-label="Close popupsiparis" onclick="closePopupsiparis()">×</button>
     <p id="popupsiparisDesc"> 
-      HAZIRLANIYOR...
+      Sırasıyla alanları doldurunuz.
     </p>
       <div class="containerwp">
-    <h2>Contact via WhatsApp</h2>
+    <h2>Özel Tasarım Talebi</h2>
 
  <form id="whatsapp-form" autocomplete="off" novalidate>
       <label for="name">Adınız</label>
       <input type="text" id="name" name="name" placeholder="Hitap için." required />
 
-      <label for="age">How old are you?</label>
-      <input type="number" id="age" name="age" placeholder="Your age" min="1" required />
+      <label for="age">Ürün Sayısı</label>
+      <input type="number" id="age" name="age" placeholder="İmal edilecek ürün sayısı." min="1" required />
 
       <label for="location">Siparişin teslim alınacağı şehir</label>
       <input type="text" id="location" name="location" placeholder="Eskişehir vb." required />
@@ -747,24 +746,24 @@
         <option value="belt">Kemer</option>
         <option value="bag">Çanta</option>
         <option value="accessory">Aksesuar</option>
-        <option value="other">Başka bir şey (Yazın)</option>
+        <option value="other">Başka bir şey ya da birden fazla kategoride ürün. (Yazın)</option>
       </select>
 
       <input type="text" id="custom-item" name="custom-item" placeholder="İstediğiniz ürün kategorisini yazın." />
 
-      <label for="material">Material Preference</label>
+      <label for="material">Malzeme Tercihi</label>
       <select id="material" name="material" required>
         <option value="">Seçin.</option>
-        <option value="real_leather">Real Leather</option>
-        <option value="vegan_leather">Vegan Leather</option>
-        <option value="not_sure">Not Sure</option>
+        <option value="real_leather">Hakiki deri</option>
+        <option value="vegan_leather">Suni deri</option>
+        <option value="not_sure">Emin değilim.</option>
       </select>
 
       <label for="color">Renk tercihiniz.</label>
       <input type="text" id="color" name="color" placeholder="Örn: Siyah, Kahverengi..." required />
 
       <label for="size">Ölçü / Beden (Varsa)</label>
-      <input type="text" id="size" name="size" placeholder="Örn: 95 cm kemer, 11x9 cm cüzdan vb." />
+      <input type="text" id="size" name="size" placeholder="Örn: 95cm kemer 11x9cm cüzdan vb." />
 
       <label for="design">Özel Tasarım Detayları</label>
       <textarea id="design" name="design" placeholder="İsim yazısı, özel dikiş, tarih, vb."></textarea>
@@ -980,12 +979,12 @@
         const message = encodeURIComponent(form.message.value.trim());
         const encodedImageUrl = encodeURIComponent(imageUrl);
 
-        const whatsappNumber = '905059792823';
+        const whatsappNumber = '905443807080';
 
 
        const text =
   `**Ad**: ${name}%0A%0A` +
-  `**Yaş**: ${age}%0A%0A` +
+  `**Ürün Sayısı**: ${age}%0A%0A` +
   `**Şehir**: ${location}%0A%0A` +
   `**Telefon**: ${phone}%0A%0A` +
   `**Ürün Kategorisi**: ${item}%0A%0A` +
