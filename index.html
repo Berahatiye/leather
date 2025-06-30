@@ -964,7 +964,6 @@
           }
         }
 
-
         const name = encodeURIComponent(form.name.value.trim());
         const age = encodeURIComponent(form.age.value.trim());
         const location = encodeURIComponent(form.location.value.trim());
@@ -984,19 +983,18 @@
         const whatsappNumber = '905059792823';
 
 
-        const text =
-          `Ad: ${name}%0A%0A` +
-          `Yaş: ${age}%0A%0A` +
-          `Şehir: ${location}%0A%0A` +
-          `Telefon: ${phone}%0A%0A` +
-          `Ürün Kategorisi: ${item}%0A%0A` +
-          `Malzeme: ${material}%0A%0A` +
-          `Renk: ${color}%0A%0A` +
-          `Ölçü: ${size}%0A%0A` +
-          `Tasarım: ${design}%0A%0A` +
-          `Detaylı Mesaj: ${message}%0A%0A` +
-          `Görsel Linki: ${encodedImageUrl}`;
-
+       const text =
+  `**Ad**: ${name}%0A%0A` +
+  `**Yaş**: ${age}%0A%0A` +
+  `**Şehir**: ${location}%0A%0A` +
+  `**Telefon**: ${phone}%0A%0A` +
+  `**Ürün Kategorisi**: ${item}%0A%0A` +
+  `**Malzeme**: ${material}%0A%0A` +
+  `**Renk**: ${color}%0A%0A` +
+  `**Ölçü**: ${size}%0A%0A` +
+  `**Tasarım**: ${design}%0A%0A` +
+  `**Detaylı Mesaj**: ${message}%0A%0A` +
+  `**Görsel Linki**: ${encodedImageUrl}`;
 
         const url = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${text}`;
         window.open(url, '_blank');
