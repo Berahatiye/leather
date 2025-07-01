@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'No image provided' });
   }
 
-  const apiKey = 'e7f4b19f2cce873d00662480776c9543'; // Your imgbb API key
+  const apiKey = 'e7f4b19f2cce873d00662480776c9543'; // Your imgbb key here
 
   try {
     const formData = new URLSearchParams();
