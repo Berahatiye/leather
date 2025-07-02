@@ -11,10 +11,6 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      user-select: none;
-      -webkit-user-select: none;
-      -ms-user-select: none;
-      -moz-user-select: none;
       outline: none;
       -webkit-tap-highlight-color: transparent;
     }
@@ -25,6 +21,10 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #fff;
       overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      -moz-user-select: none;
     }
 
     #loader {
@@ -103,6 +103,13 @@
     header.scrolled {
       background-color: #f5f5f7;
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    img{
+    -webkit-user-drag: none;
+    user-drag: none;
+    pointer-events: none;
+    user-select: none;
     }
 
     .logo img {
@@ -354,6 +361,7 @@ nav {
     width: 100%;
     max-height: 80vh;
     overflow-y: auto;
+    overflow-x: hidden;
     font-size: 1rem;
     color: #333;
     user-select: text;
@@ -657,6 +665,12 @@ nav {
 
     
 </style>
+
+<script>
+document.addEventListener('contextmenu', event => event.preventDefault());
+</script>
+
+
 </head>
 <body>
 
