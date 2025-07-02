@@ -782,11 +782,11 @@ nav {
       <label for="imageUpload">Görsel yükleyin (isteğe bağlı)</label>
       <input type="hidden" role="uploadcare-uploader" id="imageUpload" data-clearable data-tabs="file url camera" />
 
-
 <script>
   UPLOADCARE_PUBLIC_KEY = '3ea188edc74c60043344';
 </script>
 <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+
 
 
       <button class="gonder" id="gonder" type="submit" aria-label="Send message on WhatsApp">GÖNDER</button>
@@ -920,7 +920,7 @@ const customInput = document.getElementById('custom-item');
 const form = document.getElementById('whatsapp-form');
 const sendBtn = document.getElementById('gonder');
 
-// Show/hide custom item input
+// Show/hide custom input based on selected item
 itemSelect.addEventListener('change', () => {
   if (itemSelect.value === 'other') {
     customInput.style.display = 'block';
@@ -932,7 +932,6 @@ itemSelect.addEventListener('change', () => {
   }
 });
 
-// Handle form submission
 form.addEventListener('submit', async function (e) {
   e.preventDefault();
   sendBtn.disabled = true;
@@ -942,15 +941,25 @@ form.addEventListener('submit', async function (e) {
   try {
     let imageUrl = 'No image uploaded';
     const widget = uploadcare.Widget('#imageUpload');
-
-    const file = await widget.value(); // Wait for image upload
+    const file = widget.value();
 
     if (file) {
-      const fileInfo = await file.promise();
+      let fileInfo;
+
+      if (typeof file === 'string') {
+        // If it's UUID string, get file info from UploadCare
+        fileInfo = await uploadcare.file(file).done();
+      } else if (typeof file.promise === 'function') {
+        // If it has promise() method, await it
+        fileInfo = await file.promise();
+      } else {
+        throw new Error('Unexpected file object format');
+      }
+
       imageUrl = fileInfo.cdnUrl;
     }
 
-    // Encode form data
+    // Encode form values
     const name = encodeURIComponent(form.name.value.trim());
     const age = encodeURIComponent(form.age.value.trim());
     const location = encodeURIComponent(form.location.value.trim());
@@ -966,7 +975,7 @@ form.addEventListener('submit', async function (e) {
     const message = encodeURIComponent(form.message.value.trim());
     const encodedImageUrl = encodeURIComponent(imageUrl);
 
-    // Build WhatsApp message
+    // Prepare WhatsApp message
     const whatsappNumber = '905443807080';
     const text =
       `**Ad**: ${name}\n` +
@@ -980,12 +989,15 @@ form.addEventListener('submit', async function (e) {
       `**Tasarım**: ${design}\n` +
       `**Detaylı Mesaj**: ${message}\n` +
       `**Görsel Linki**: ${encodedImageUrl}`;
+
     const url = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${text}`;
 
+    // Open WhatsApp with the message
     window.open(url, '_blank');
 
-    // Simulate logout
+    // Simulate logout by removing widget and clearing public key
     simulateLogout();
+
   } catch (error) {
     alert('Bir şeyler ters gitti: ' + error.message);
   } finally {
@@ -995,11 +1007,12 @@ form.addEventListener('submit', async function (e) {
   }
 });
 
-// Simulated logout
 function simulateLogout() {
   try {
     UPLOADCARE_PUBLIC_KEY = null;
-    document.getElementById('imageUpload')?.remove();
+    // Remove the uploader element so user can't upload again until page refresh
+    const uploader = document.getElementById('imageUpload');
+    if (uploader) uploader.remove();
     console.log('Simulated logout from UploadCare.');
   } catch (err) {
     console.warn('Logout simulation failed:', err.message);
