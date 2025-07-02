@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -283,9 +283,6 @@ nav {
     }
 
 
-
-
-
     @media (max-width: 320px) {
   nav {
     gap: 12px;
@@ -294,9 +291,6 @@ nav {
     font-size: 1rem;
   }
 }
-
-
-
 
 
     @media (max-width: 768px) {
@@ -330,9 +324,6 @@ nav {
         font-size: 1.2rem;
       }
     }
-
-
-
 
 
 
@@ -400,9 +391,6 @@ nav {
   }
 
 
-
-
-
    #popupsiparis {
     position: fixed;
     inset: 0;
@@ -464,7 +452,6 @@ nav {
   .popupsiparis-content::-webkit-scrollbar-track {
     background: #f0f0f0;
   }
-
 
 
 
@@ -664,14 +651,12 @@ nav {
       width: 70px;
       height: 70px;
     }
-
-    
+   
 </style>
 
 <script>
 document.addEventListener('contextmenu', event => event.preventDefault());
 </script>
-
 
 </head>
 <body>
@@ -731,10 +716,6 @@ document.addEventListener('contextmenu', event => event.preventDefault());
     </p>
   </div>
 </div>
-
-
-
-
 
 
 <div id="popupsiparis" aria-modal="true" role="dialog" aria-labelledby="popupsiparisTitle" aria-describedby="popupsiparisDesc">
@@ -858,7 +839,7 @@ const customInput = document.getElementById('custom-item');
 const form = document.getElementById('whatsapp-form');
 const sendBtn = document.getElementById('gonder');
 
-// Show custom item input if "other" is selected
+
 itemSelect.addEventListener('change', () => {
   if (itemSelect.value === 'other') {
     customInput.style.display = 'block';
@@ -870,7 +851,7 @@ itemSelect.addEventListener('change', () => {
   }
 });
 
-// Form submission handler
+
 form.addEventListener('submit', async function (e) {
   e.preventDefault();
   sendBtn.disabled = true;
@@ -886,7 +867,7 @@ form.addEventListener('submit', async function (e) {
       const fileOrGroup = await value.promise();
 
       if (fileOrGroup.isGroup) {
-        // Multiple files
+
         const files = await fileOrGroup.files();
         const urls = await Promise.all(
           files.map(filePromise =>
@@ -894,15 +875,15 @@ form.addEventListener('submit', async function (e) {
           )
         );
 
-        // Each link on its own line
+
         imageUrlsText = urls.map(url => `🔗 ${url}`).join('%0A');
       } else {
-        // Single file
+
         imageUrlsText = `🔗 ${fileOrGroup.cdnUrl}`;
       }
     }
 
-    // Collect and encode form data
+
     const name = encodeURIComponent(form.name.value.trim());
     const age = encodeURIComponent(form.age.value.trim());
     const location = encodeURIComponent(form.location.value.trim());
@@ -917,7 +898,7 @@ form.addEventListener('submit', async function (e) {
     const design = encodeURIComponent(form.design.value.trim());
     const message = encodeURIComponent(form.message.value.trim());
 
-    // WhatsApp message text
+
     const whatsappNumber = '905443807080';
     const text =
       `*Ad*: ${name}%0A%0A` +
@@ -932,7 +913,7 @@ form.addEventListener('submit', async function (e) {
       `*Detaylı Mesaj*: ${message}%0A%0A` +
       `*Görsel Linkleri*:%0A${imageUrlsText}`;
 
-    // Open WhatsApp chat with filled message
+
     const url = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${text}`;
     window.open(url, '_blank');
 
@@ -947,7 +928,7 @@ form.addEventListener('submit', async function (e) {
   }
 });
 
-// Reset Uploadcare widget after submit
+
 function simulateLogout() {
   const widget = uploadcare.Widget('#imageUpload');
   widget.value(null);
@@ -958,8 +939,6 @@ function simulateLogout() {
   alert('UploadCare oturumunuz sonlandırıldı. Yeniden yüklemek için sayfayı yenileyin.');
 }
 </script>
-
-
 
 <script>
     const header = document.getElementById('header');
@@ -1049,7 +1028,6 @@ function simulateLogout() {
 
 
 
-
     const openBtn = document.getElementById('secenek');
     const overlay = document.getElementById('overlay');
     const sheet = document.getElementById('sheet');
@@ -1106,7 +1084,6 @@ function simulateLogout() {
     window.addEventListener('touchmove', onDragMove);
     window.addEventListener('mouseup', onDragEnd);
     window.addEventListener('touchend', onDragEnd);
-
 
 </script>
 </body>
