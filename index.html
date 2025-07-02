@@ -146,9 +146,11 @@ nav {
   font-size: clamp(0.95rem, 2.5vw, 1.2rem);
   font-weight: 500;
   transition: color 0.3s ease;
-  cursor: pointer;
 }
 
+.secenek span{
+  cursor: pointer;
+}
 
     .section {
       display: flex;
@@ -795,13 +797,20 @@ document.addEventListener('contextmenu', event => event.preventDefault());
 - Eklemek istediğiniz başka notlar var mı? (Not kartı, ambalaj tercihi vs.)" required></textarea>
 
       <label for="imageUpload">Görsel yükleyin (isteğe bağlı)</label>
-      <input type="hidden" role="uploadcare-uploader" id="imageUpload" data-clearable data-tabs="file url camera" />
+<input 
+  type="hidden" 
+  role="uploadcare-uploader" 
+  id="imageUpload" 
+  data-clearable 
+  data-tabs="file url camera" 
+  data-multiple 
+/>
 
 <script>
   UPLOADCARE_PUBLIC_KEY = '3ea188edc74c60043344';
 </script>
-<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
 
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
 
 
       <button class="gonder" id="gonder" type="submit" aria-label="Send message on WhatsApp">GÖNDER</button>
@@ -842,6 +851,134 @@ document.addEventListener('contextmenu', event => event.preventDefault());
       </div>
     </div>
   </div>
+
+<!-- Uploadcare Widget Input -->
+<input 
+  type="hidden" 
+  role="uploadcare-uploader" 
+  id="imageUpload" 
+  data-clearable 
+  data-tabs="file url camera" 
+  data-multiple 
+/>
+
+<!-- Uploadcare Public Key -->
+<script>
+  UPLOADCARE_PUBLIC_KEY = '3ea188edc74c60043344';
+</script>
+
+<!-- Uploadcare Library -->
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+
+<!-- WhatsApp Form Script -->
+<script>
+const itemSelect = document.getElementById('item');
+const customInput = document.getElementById('custom-item');
+const form = document.getElementById('whatsapp-form');
+const sendBtn = document.getElementById('gonder');
+
+// Show custom item input if "other" is selected
+itemSelect.addEventListener('change', () => {
+  if (itemSelect.value === 'other') {
+    customInput.style.display = 'block';
+    customInput.required = true;
+  } else {
+    customInput.style.display = 'none';
+    customInput.required = false;
+    customInput.value = '';
+  }
+});
+
+// Form submission handler
+form.addEventListener('submit', async function (e) {
+  e.preventDefault();
+  sendBtn.disabled = true;
+  sendBtn.classList.add('loading');
+  sendBtn.textContent = 'Uploading...';
+
+  try {
+    let imageUrlsText = 'No image uploaded';
+    const widget = uploadcare.Widget('#imageUpload');
+    const value = widget.value();
+
+    if (value) {
+      const fileOrGroup = await value.promise();
+
+      if (fileOrGroup.isGroup) {
+        // Multiple files
+        const files = await fileOrGroup.files();
+        const urls = await Promise.all(
+          files.map(filePromise =>
+            filePromise.then(file => file.cdnUrl)
+          )
+        );
+
+        // Each link on its own line
+        imageUrlsText = urls.map(url => `🔗 ${url}`).join('%0A');
+      } else {
+        // Single file
+        imageUrlsText = `🔗 ${fileOrGroup.cdnUrl}`;
+      }
+    }
+
+    // Collect and encode form data
+    const name = encodeURIComponent(form.name.value.trim());
+    const age = encodeURIComponent(form.age.value.trim());
+    const location = encodeURIComponent(form.location.value.trim());
+    const phone = encodeURIComponent(form.phone.value.trim());
+    const item =
+      form.item.value === 'other'
+        ? encodeURIComponent(form['custom-item'].value.trim())
+        : encodeURIComponent(form.item.options[form.item.selectedIndex].text);
+    const material = encodeURIComponent(form.material.value.trim());
+    const color = encodeURIComponent(form.color.value.trim());
+    const size = encodeURIComponent(form.size.value.trim());
+    const design = encodeURIComponent(form.design.value.trim());
+    const message = encodeURIComponent(form.message.value.trim());
+
+    // WhatsApp message text
+    const whatsappNumber = '905443807080';
+    const text =
+      `*Ad*: ${name}%0A%0A` +
+      `*Ürün Sayısı*: ${age}%0A%0A` +
+      `*Şehir*: ${location}%0A%0A` +
+      `*Telefon*: ${phone}%0A%0A` +
+      `*Ürün Kategorisi*: ${item}%0A%0A` +
+      `*Malzeme*: ${material}%0A%0A` +
+      `*Renk*: ${color}%0A%0A` +
+      `*Ölçü*: ${size}%0A%0A` +
+      `*Tasarım*: ${design}%0A%0A` +
+      `*Detaylı Mesaj*: ${message}%0A%0A` +
+      `*Görsel Linkleri*:%0A${imageUrlsText}`;
+
+    // Open WhatsApp chat with filled message
+    const url = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${text}`;
+    window.open(url, '_blank');
+
+    simulateLogout();
+
+  } catch (error) {
+    alert('Bir şeyler ters gitti: ' + error.message);
+  } finally {
+    sendBtn.disabled = false;
+    sendBtn.classList.remove('loading');
+    sendBtn.textContent = 'GÖNDER';
+  }
+});
+
+// Reset Uploadcare widget after submit
+function simulateLogout() {
+  const widget = uploadcare.Widget('#imageUpload');
+  widget.value(null);
+  widget.disable();
+  document.getElementById('imageUpload').style.display = 'none';
+  window.UPLOADCARE_PUBLIC_KEY = null;
+
+  alert('UploadCare oturumunuz sonlandırıldı. Yeniden yüklemek için sayfayı yenileyin.');
+}
+</script>
+
+
 
 <script>
     const header = document.getElementById('header');
@@ -928,108 +1065,6 @@ document.addEventListener('contextmenu', event => event.preventDefault());
     }
   })
 
-
-
-  
-const itemSelect = document.getElementById('item');
-const customInput = document.getElementById('custom-item');
-const form = document.getElementById('whatsapp-form');
-const sendBtn = document.getElementById('gonder');
-
-
-itemSelect.addEventListener('change', () => {
-  if (itemSelect.value === 'other') {
-    customInput.style.display = 'block';
-    customInput.required = true;
-  } else {
-    customInput.style.display = 'none';
-    customInput.required = false;
-    customInput.value = '';
-  }
-});
-
-form.addEventListener('submit', async function (e) {
-  e.preventDefault();
-  sendBtn.disabled = true;
-  sendBtn.classList.add('loading');
-  sendBtn.textContent = 'Uploading...';
-
-  try {
-    let imageUrl = 'No image uploaded';
-    const widget = uploadcare.Widget('#imageUpload');
-    const file = widget.value();
-
-    if (file) {
-      let fileInfo;
-      if (typeof file === 'string') {
-        fileInfo = await uploadcare.file(file).done();
-      } else if (typeof file.promise === 'function') {
-        fileInfo = await file.promise();
-      } else {
-        throw new Error('Unexpected file object format');
-      }
-      imageUrl = fileInfo.cdnUrl;
-    }
-
-
-    const name = encodeURIComponent(form.name.value.trim());
-    const age = encodeURIComponent(form.age.value.trim());
-    const location = encodeURIComponent(form.location.value.trim());
-    const phone = encodeURIComponent(form.phone.value.trim());
-    const item =
-      form.item.value === 'other'
-        ? encodeURIComponent(form['custom-item'].value.trim())
-        : encodeURIComponent(form.item.options[form.item.selectedIndex].text);
-    const material = encodeURIComponent(form.material.value.trim());
-    const color = encodeURIComponent(form.color.value.trim());
-    const size = encodeURIComponent(form.size.value.trim());
-    const design = encodeURIComponent(form.design.value.trim());
-    const message = encodeURIComponent(form.message.value.trim());
-    const encodedImageUrl = encodeURIComponent(imageUrl);
-
-
-    const whatsappNumber = '905443807080';
-    const text =
-      `*Ad*: ${name}%0A%0A` +
-      `*Ürün Sayısı*: ${age}%0A%0A` +
-      `*Şehir*: ${location}%0A%0A` +
-      `*Telefon*: ${phone}%0A%0A` +
-      `*Ürün Kategorisi*: ${item}%0A%0A` +
-      `*Malzeme*: ${material}%0A%0A` +
-      `*Renk*: ${color}%0A%0A` +
-      `*Ölçü*: ${size}%0A%0A` +
-      `*Tasarım*: ${design}%0A%0A` +
-      `*Detaylı Mesaj*: ${message}%0A%0A` +
-      `*Görsel Linki*: ${encodedImageUrl}`;
-
-    const url = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${text}`;
-
-
-    window.open(url, '_blank');
-
-
-    simulateLogout();
-
-  } catch (error) {
-    alert('Bir şeyler ters gitti: ' + error.message);
-  } finally {
-    sendBtn.disabled = false;
-    sendBtn.classList.remove('loading');
-    sendBtn.textContent = 'GÖNDER';
-  }
-});
-
-function simulateLogout() {
-  const widget = uploadcare.Widget('#imageUpload');
-  widget.value(null);         
-  widget.disable();          
-  document.getElementById('imageUpload').style.display = 'none';
-  window.UPLOADCARE_PUBLIC_KEY = null; 
-
-  alert('You have been logged out from UploadCare. Please refresh the page to upload again.');
-}
-
-    
 
 
 
