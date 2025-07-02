@@ -914,6 +914,7 @@ nav {
   })
 
 
+
   
 const itemSelect = document.getElementById('item');
 const customInput = document.getElementById('custom-item');
@@ -945,17 +946,13 @@ form.addEventListener('submit', async function (e) {
 
     if (file) {
       let fileInfo;
-
       if (typeof file === 'string') {
-        // If it's UUID string, get file info from UploadCare
         fileInfo = await uploadcare.file(file).done();
       } else if (typeof file.promise === 'function') {
-        // If it has promise() method, await it
         fileInfo = await file.promise();
       } else {
         throw new Error('Unexpected file object format');
       }
-
       imageUrl = fileInfo.cdnUrl;
     }
 
@@ -995,7 +992,7 @@ form.addEventListener('submit', async function (e) {
     // Open WhatsApp with the message
     window.open(url, '_blank');
 
-    // Simulate logout by removing widget and clearing public key
+    // Simulate logout to prevent further uploads
     simulateLogout();
 
   } catch (error) {
@@ -1008,17 +1005,14 @@ form.addEventListener('submit', async function (e) {
 });
 
 function simulateLogout() {
-  try {
-    UPLOADCARE_PUBLIC_KEY = null;
-    // Remove the uploader element so user can't upload again until page refresh
-    const uploader = document.getElementById('imageUpload');
-    if (uploader) uploader.remove();
-    console.log('Simulated logout from UploadCare.');
-  } catch (err) {
-    console.warn('Logout simulation failed:', err.message);
-  }
-}
+  const widget = uploadcare.Widget('#imageUpload');
+  widget.value(null);         // Clear any selected file
+  widget.disable();           // Disable uploader UI
+  document.getElementById('imageUpload').style.display = 'none'; // Hide input
+  window.UPLOADCARE_PUBLIC_KEY = null; // Remove public key (best effort)
 
+  alert('You have been logged out from UploadCare. Please refresh the page to upload again.');
+}
 
     
 
