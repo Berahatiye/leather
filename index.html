@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
   <link rel="icon" type="image/webp" href="https://raw.githubusercontent.com/Berahatiye/leather/refs/heads/main/ethernalogo-removebg-preview.webp">
   <title>Etherna Leather</title>
 <style>
@@ -617,8 +618,8 @@ nav {
     }
 
     .grabber {
-      width: 120px;
-      height: 8px;
+      width: 150px;
+      height: 12px;
       background: #666;
       border-radius: 12px;
       margin: 12px auto 8px;
@@ -975,17 +976,17 @@ form.addEventListener('submit', async function (e) {
 
     const whatsappNumber = '905443807080';
     const text =
-      `**Ad**: ${name}\n` +
-      `**Ürün Sayısı**: ${age}\n` +
-      `**Şehir**: ${location}\n` +
-      `**Telefon**: ${phone}\n` +
-      `**Ürün Kategorisi**: ${item}\n` +
-      `**Malzeme**: ${material}\n` +
-      `**Renk**: ${color}\n` +
-      `**Ölçü**: ${size}\n` +
-      `**Tasarım**: ${design}\n` +
-      `**Detaylı Mesaj**: ${message}\n` +
-      `**Görsel Linki**: ${encodedImageUrl}`;
+      `*Ad*: ${name}%0A%0A` +
+      `*Ürün Sayısı*: ${age}%0A%0A` +
+      `*Şehir*: ${location}%0A%0A` +
+      `*Telefon*: ${phone}%0A%0A` +
+      `*Ürün Kategorisi*: ${item}%0A%0A` +
+      `*Malzeme*: ${material}%0A%0A` +
+      `*Renk*: ${color}%0A%0A` +
+      `*Ölçü*: ${size}%0A%0A` +
+      `*Tasarım*: ${design}%0A%0A` +
+      `*Detaylı Mesaj*: ${message}%0A%0A` +
+      `*Görsel Linki*: ${encodedImageUrl}`;
 
     const url = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${text}`;
 
