@@ -732,8 +732,8 @@ document.addEventListener('contextmenu', event => event.preventDefault());
 
 
 <div id="popupsiparis" aria-modal="true" role="dialog" aria-labelledby="popupsiparisTitle" aria-describedby="popupsiparisDesc">
-  <div class="popup-content">
-    <button class="popupsiparis-close" aria-label="Close popupsiparis" onclick="closePopupsiparis()">×</button>
+  <div class="popup-content" id="popup-content">
+    <button class="popupsiparis-close" aria-label="Close popupsiparis" onclick="closePopupsiparis(); scrollToTop()">×</button>
     <p id="popupsiparisDesc"> 
       Sırasıyla alanları doldurunuz.
     </p>
@@ -837,10 +837,10 @@ document.addEventListener('contextmenu', event => event.preventDefault());
           </a>
         </div>
         <p style="margin-top: 12px; font-style: normal; font-weight: 600; text-align: center;">   
-          İstiklal, Çınarcık Sk. No:2/a, 26010 Odunpazarı/Eskişehir
+          0 544 380 70 80
         </p>
         <p style="margin-top: 12px; font-style: normal; font-weight: 600; text-align: center;">   
-          0 544 380 70 80
+          İstiklal Mah. Çınarcık Sk. No:2/a, 26010 Odunpazarı/Eskişehir
         </p>
       </div>
     </div>
@@ -1098,6 +1098,13 @@ function simulateLogout() {
     window.addEventListener('mouseup', onDragEnd);
     window.addEventListener('touchend', onDragEnd);
 
+
+
+
+  function scrollToTop() {
+      const popuptobescroll = document.getElementById('popup-content');
+      popuptobescroll.scrollTop = 0;
+  }
 </script>
 </body>
 </html>
