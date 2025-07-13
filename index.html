@@ -26,12 +26,11 @@
       -ms-user-select: none;
       -moz-user-select: none;
     }
-
     #loader {
       position: fixed;
       z-index: 9999;
       inset: 0;
-      background-color:#b87333;
+      background-color: #b87333;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -53,8 +52,13 @@
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
 
     .container {
@@ -990,12 +994,7 @@ function simulateLogout() {
       document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
     }
 
-    window.onload = () => {
-      const loader = document.getElementById('loader');
-      loader.classList.add('hidden');
-      setTimeout(() => loader.remove(), 700);
-      scrollArea.scrollTop = 0;
-    };
+
 
 
 
@@ -1105,6 +1104,72 @@ function simulateLogout() {
       const popuptobescroll = document.getElementById('popup-content');
       popuptobescroll.scrollTop = 0;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const loader = document.getElementById('loader');
+      const images = Array.from(document.images);
+      const videos = Array.from(document.querySelectorAll('video'));
+      const mediaElements = [...images, ...videos];
+
+      if (mediaElements.length === 0) {
+        // No images or videos, hide loader immediately
+        hideLoader();
+        return;
+      }
+
+      let loadedCount = 0;
+      const totalCount = mediaElements.length;
+
+      function checkAllLoaded() {
+        loadedCount++;
+        if (loadedCount === totalCount) {
+          hideLoader();
+        }
+      }
+
+      function hideLoader() {
+        loader.classList.add('hidden');
+        setTimeout(() => loader.remove(), 700);
+      }
+
+      mediaElements.forEach(media => {
+        if (media.tagName === 'IMG') {
+          if (media.complete && media.naturalWidth !== 0) {
+            // Already loaded
+            checkAllLoaded();
+          } else {
+            media.addEventListener('load', checkAllLoaded);
+            media.addEventListener('error', checkAllLoaded); // Count errors as loaded to avoid hanging
+          }
+        } else if (media.tagName === 'VIDEO') {
+          if (media.readyState >= 4) { // HAVE_ENOUGH_DATA
+            checkAllLoaded();
+          } else {
+            media.addEventListener('canplaythrough', checkAllLoaded);
+            media.addEventListener('error', checkAllLoaded);
+          }
+        }
+      });
+    });
 </script>
 </body>
 </html>
